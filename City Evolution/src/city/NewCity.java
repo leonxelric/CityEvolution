@@ -12,12 +12,14 @@ public class NewCity
     private double growthRate;
     private double size;
    
-    public NewCity(PApplet p, double pop, double foodSupp, double growth)
+    public NewCity(PApplet p, double pop, double foodSupp, double growth, double xPos, double yPos)
     {
         parent = p;
         population = pop;
         foodSupply = foodSupp;
         growthRate = growth;
+        posX = xPos;
+        posY = yPos;
     }
    
     public void passDay()
@@ -31,6 +33,8 @@ public class NewCity
         	foodSupply -= population;
         	population *= growthRate;
         }
+    	
+    	//System.out.println(population + );
     	
     	size = population / 100;
     }

@@ -21,21 +21,25 @@ public class CityRunner extends PApplet
 	{
 		for(int i = 0; i < amount; i++)
 		{
-			cities[i] = new NewCity(this, random(200, 2000), random(200, 2000), random(0.9f, 1.1f));
+			cities[i] = new NewCity(this, (double) random(200, 5000), (double)random(200, 5000), 
+					(double)random(0.8f, 1.2f), (double) random(0, 1800), (double) random(0, 900));
 		}
 	}
 	
 	public void draw()
-	{
-		background(75, 150, 75);
-		
+	{	
 		for(int i = 0; i < amount; i++)
 		{
-			cities[i].drawCity();
 			cities[i].passDay();
+			cities[i].drawCity();
 			
 			if(dist(mouseX, mouseY, (int) cities[i].getxPos(), (int) cities[i].getyPos()) <= cities[i].getSize()/2)
 				cities[i].drawInfo();
 		}
+	}
+	
+	public void mousepressed()
+	{
+		ellipse(mouseX, mouseY, 100, 100);
 	}
 }
