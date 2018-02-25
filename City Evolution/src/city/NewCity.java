@@ -7,9 +7,9 @@ public class NewCity
     private PApplet parent;
     private double posX, posY;
     private double population;
-    private double buildings;
     private double foodSupply;
     private double growthRate;
+    private boolean alive;
     private double size;
    
     public NewCity(PApplet p, double pop, double foodSupp, double growth, double xPos, double yPos)
@@ -20,6 +20,7 @@ public class NewCity
         growthRate = growth;
         posX = xPos;
         posY = yPos;
+        alive = true;
     }
    
     public void passDay()
@@ -29,9 +30,13 @@ public class NewCity
     	if(foodSupply < 0)
     		population += foodSupply;
     	
+    	if(population < 0)
+    		alive = false;
+    		
     	population *= growthRate;
+    	
     	size = population / 100;
-    	changeFood(200);
+    	changeFood((double)parent.random(800, 1201));
     }
     
     public void changeFood(double newFood)
@@ -41,8 +46,11 @@ public class NewCity
    
     public void drawCity()
     {
-        parent.fill(255);
-        parent.ellipse((float)posX, (float)posY, (float)size, (float)size);
+    	if(alive)
+    	{
+	        parent.fill(255);
+	        parent.ellipse((float)posX, (float)posY, (float)size, (float)size);
+	    }	
     }
  
     public double getSize()
@@ -63,6 +71,11 @@ public class NewCity
     public double getyPos()
     {
         return posY;
+    }
+    
+    public double getFoodSupply()
+    {
+    	return foodSupply;
     }
     
     public void drawInfo()
