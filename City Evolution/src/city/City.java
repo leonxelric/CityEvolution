@@ -5,86 +5,78 @@ import processing.core.PApplet;
 public class City
 {
     private PApplet parent;
-    public double posX, posY;
-    public int young, adult, old;
-    double size;
-    boolean isHostile;
-    int buildings;
-    int foodSupply = 200; // 1 = enough food for 1 person a day
-    public int[] jobs;
+    private double posX, posY;
+    private double young, adult, old;
+    private double size;
+    private double buildings;
+    private double foodSupply;
    
-    public City(PApplet p, int y, int a, int o, int sz, int house, int pX, int pY)
+    public City(PApplet p, double y, double a, double o, double house, 
+    		double pX, double pY, double foodSupp, double builds)
     {
         parent = p;
         young = y;
         adult = a;
         old = o;
-        size = sz;
-//        posX = parent.random(0, 1801);
-//        posY = parent.random(0, 901);
         posX= pX;
         posY= pY;
-        buildings = 0;
+        buildings = builds;
+        foodSupply = foodSupp;
     }
-   
-    public void passDay(int newFood)
+    
+    public void changePop()
     {
-    	System.out.println(foodSupply);
-        if(foodSupply < (young + adult + old))
+    	if(foodSupply < (young + adult + old))
         {
-            int diff = ((young + adult + old) - foodSupply);
+            double diff = ((young + adult + old) - foodSupply);
             young -= diff/3;
             adult -= diff/3;
             old -= diff/3;
         }
-        
-        foodSupply -= (young + adult + old);
-    	System.out.println(foodSupply);
+    	
+    	foodSupply -= (young + adult + old);
         foodSupply += newFood;
-    	System.out.println(foodSupply);
-       
-        int changeInPop;
-        int totalPop = (young + adult + old);
-        System.out.println("total pop: " + totalPop);
-        changeInPop = (int)(adult * .00016);
+        
+        double changeInPop;
+        double totalPop = (young + adult + old);
+        
+        changeInPop = (adult * .05555);
         System.out.println("change in pop: " + changeInPop);
         young += changeInPop;
+        
         changeInPop = (young / 18);
-        System.out.println("change in pop: " + changeInPop);
+        
         young -= changeInPop;
         adult += changeInPop;
         changeInPop = (adult / 40);
-        System.out.println("change in pop: " + changeInPop);
+        
         adult -= changeInPop;
         old += changeInPop;
         old -= totalPop * .000021;
-       
-        int workers = calculateWorkers(totalPop);
-        System.out.println("workers: " + workers);
-        int jobs = totalPop / 2;
-        System.out.println("jobs; " + jobs);
+    }
+   
+    public void passDay(int newFood)
+    {
+        double workers = calculateWorkers(young + adult + old);
+        double jobs = (young + adult + old) / 2;
         
-        int wwj = getWorkersWithJobs(workers, jobs);//wwj is workers with jobs
-        System.out.println("wwj: " + wwj);
-        int houses = buildings * 2/3;
+        changePop(newFood);
         
-        int houseDemand = old/2 + (young + adult)/4;
+        double wwj = getWorkersWithJobs(workers, jobs);
+        double houses = buildings * 2/3;
         
-//        int houses = wwj/450 * 2/3;
-//        if(houseDemand <= houses)
-        	
-        System.out.println("house demand: " + houseDemand);
+        double houseDemand = old/2 + (young + adult)/4;
+        
         if(houseDemand > houses)
         {
         	buildings += wwj/450;
-        	int diff = houses - houseDemand;
+        	double diff = houses - houseDemand;
         	adult -= (diff/10) * 2/3;
         	old -= (diff/10) * 1/3;
         }
         
-//        growCity(buildings);
-        System.out.println("buildings: " + buildings);
-        size = buildings/10;
+        size = (old + young + adult)/100;
+        //size = buildings/10;
     }
    
     public void growCity(double newBuildings)
@@ -94,20 +86,21 @@ public class City
     	System.out.println("size: " + size);
     }
    
-    public int getWorkersWithJobs(int workers, int jobs)
+    public double getWorkersWithJobs(double workers, double jobs)
     {
-    	int WWJ = 0; //Workers With Jobs
+    	double WWJ = 0;
+    	
     	if(workers <= jobs)
     		WWJ = workers;
     	else if(workers > jobs)
     		WWJ = jobs;
+    	
     	return WWJ;
     }
     
-    public int calculateWorkers(int total)
+    public double calculateWorkers(double total)
     {
-        int workers = 0;
-        workers += (total * 5 / 8);
+        double workers = (total * 5 / 8);
         workers *= .7;
         return workers;
     }
@@ -123,26 +116,37 @@ public class City
         return size;
     }
  
-    public int getYoung()
+    public double getYoung()
     {
         return young;
     }
    
-    public int getAdult()
+    public double getAdult()
     {
         return adult;
     }
    
-    public int getOld()
+    public double getOld()
     {
         return old;
     }
     
-    public void drawInfo(int posX, int posY)
+    public double getxPos()
     {
-    	parent.fill(255);
-    	parent.rect(posX, posY, 100, 100);
+        return posX;
+    }
+    
+    public double getyPos()
+    {
+        return posY;
+    }
+    
+    public void drawInfo()
+    {
+    	parent.fill(125, 125);
+    	parent.rect(250, 100, parent.width - 500, parent.height - 200);
     	parent.fill(0);
-    	parent.text("",posX, posY);
+    	parent.textSize(50);
+    	parent.text("Size: " + size + "\nPopulation: " + (young + adult + old), 260, 300);
     }
 }
