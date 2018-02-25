@@ -9,6 +9,7 @@ public class City
     public int young, adult, old;
     double size;
     boolean isHostile;
+    int buildings;
     int foodSupply = 200; // 1 = enough food for 1 person a day
     public int[] jobs;
    
@@ -23,6 +24,7 @@ public class City
 //        posY = parent.random(0, 901);
         posX= pX;
         posY= pY;
+        buildings = 0;
     }
    
     public void passDay(int newFood)
@@ -30,7 +32,7 @@ public class City
     	System.out.println(foodSupply);
         if(foodSupply < (young + adult + old))
         {
-            int diff = (young + adult + old) - foodSupply;
+            int diff = ((young + adult + old) - foodSupply);
             young -= diff/3;
             adult -= diff/3;
             old -= diff/3;
@@ -58,23 +60,31 @@ public class City
         old -= totalPop * .000021;
        
         int workers = calculateWorkers(totalPop);
+        System.out.println("workers: " + workers);
         int jobs = totalPop / 2;
+        System.out.println("jobs; " + jobs);
         
         int wwj = getWorkersWithJobs(workers, jobs);//wwj is workers with jobs
-        
-        int buildings = wwj/450;
+        System.out.println("wwj: " + wwj);
         int houses = buildings * 2/3;
         
         int houseDemand = old/2 + (young + adult)/4;
         
+//        int houses = wwj/450 * 2/3;
+//        if(houseDemand <= houses)
+        	
+        System.out.println("house demand: " + houseDemand);
         if(houseDemand > houses)
         {
+        	buildings += wwj/450;
         	int diff = houses - houseDemand;
         	adult -= (diff/10) * 2/3;
         	old -= (diff/10) * 1/3;
         }
         
-        growCity(buildings);
+//        growCity(buildings);
+        System.out.println("buildings: " + buildings);
+        size = buildings/10;
     }
    
     public void growCity(double newBuildings)
@@ -126,5 +136,13 @@ public class City
     public int getOld()
     {
         return old;
+    }
+    
+    public void drawInfo(int posX, int posY)
+    {
+    	parent.fill(255);
+    	parent.rect(posX, posY, 100, 100);
+    	parent.fill(0);
+    	parent.text("",posX, posY);
     }
 }
