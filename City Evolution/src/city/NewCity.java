@@ -24,19 +24,14 @@ public class NewCity
    
     public void passDay()
     {
-    	if(population > foodSupply)
-        {
-        	population = foodSupply;
-        }
-        else
-        {
-        	foodSupply -= population;
-        	population *= growthRate;
-        }
+    	foodSupply -= population;
     	
-    	//System.out.println(population + );
+    	if(foodSupply < 0)
+    		population += foodSupply;
     	
+    	population *= growthRate;
     	size = population / 100;
+    	changeFood(200);
     }
     
     public void changeFood(double newFood)
@@ -46,7 +41,7 @@ public class NewCity
    
     public void drawCity()
     {
-        parent.fill(255, 0, 0);
+        parent.fill(255);
         parent.ellipse((float)posX, (float)posY, (float)size, (float)size);
     }
  
@@ -76,6 +71,7 @@ public class NewCity
     	parent.rect(250, 100, parent.width - 500, parent.height - 200);
     	parent.fill(0);
     	parent.textSize(50);
-    	parent.text("Size: " + size + "\nPopulation: " + population, 260, 300);
+    	parent.text("Size: " + size + "\nPopulation: " + population
+    			+ "\nFood Supply" + foodSupply, 260, 300);
     }
 }

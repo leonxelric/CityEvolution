@@ -4,7 +4,7 @@ import processing.core.PApplet;
 
 public class CityRunner extends PApplet
 {
-	int amount = 15;
+	int amount = 150;
 	NewCity[] cities = new NewCity[amount];
 			
 	public static void main(String[] args)
@@ -22,12 +22,14 @@ public class CityRunner extends PApplet
 		for(int i = 0; i < amount; i++)
 		{
 			cities[i] = new NewCity(this, (double) random(200, 5000), (double)random(200, 5000), 
-					(double)random(0.8f, 1.2f), (double) random(0, 1800), (double) random(0, 900));
+					(double)random(1f, 1f), (double) random(0, 1800), (double) random(0, 900));
 		}
 	}
 	
 	public void draw()
 	{	
+		background(0);
+		
 		for(int i = 0; i < amount; i++)
 		{
 			cities[i].passDay();
@@ -38,7 +40,7 @@ public class CityRunner extends PApplet
 		}
 	}
 	
-	public void mousepressed()
+	public void mousePressed()
 	{
 		ellipse(mouseX, mouseY, 100, 100);
 	}
