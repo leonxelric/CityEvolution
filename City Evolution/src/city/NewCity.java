@@ -36,7 +36,7 @@ public class NewCity
     	population *= growthRate;
     	
     	size = population / 100;
-    	changeFood((double)parent.random(800, 1201));
+    	changeFood((double)parent.random(1000, 1201));
     }
     
     public void changeFood(double newFood)
