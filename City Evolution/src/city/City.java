@@ -24,8 +24,9 @@ public class City
         foodSupply = foodSupp;
     }
     
-    public void changePop()
+    public void changePop(int nF)
     {
+    	int newFood = nF;
     	if(foodSupply < (young + adult + old))
         {
             double diff = ((young + adult + old) - foodSupply);

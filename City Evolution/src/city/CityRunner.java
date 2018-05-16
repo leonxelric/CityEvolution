@@ -33,8 +33,8 @@ public class CityRunner extends PApplet
 		{
 			cities[i].passDay();
 
-	    	System.out.println("population: " + cities[i].getPop() + "  " + i);
-	    	System.out.println("food supply: " + cities[i].getFoodSupply());
+//	    	System.out.println("population: " + cities[i].getPop() + "  " + i);
+//	    	System.out.println("food supply: " + cities[i].getFoodSupply());
 			cities[i].drawCity();
 			
 			if(dist(mouseX, mouseY, (int) cities[i].getxPos(), (int) cities[i].getyPos()) <= cities[i].getSize()/2)
